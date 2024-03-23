@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="047e731aa7784bc2a9d8355071242dff" Name="Diagram1">
+        <EntityTypeShape EntityType="zoomagModel.Animals" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="zoomagModel.Customers" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="zoomagModel.Orders" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="zoomagModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zoomagModel.AllDataWithoutIDs" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="zoomagModel.FK__Orders__Animal_I__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="zoomagModel.FK__Orders__Customer__60A75C0F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище zoomagModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Animals">
+    <Key>
+      <PropertyRef Name="ID_Animal" />
+    </Key>
+    <Property Name="ID_Animal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Species" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="ID_Customer" />
+    </Key>
+    <Property Name="ID_Customer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID_Order" />
+    </Key>
+    <Property Name="ID_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Customer_ID" Type="int" Nullable="false" />
+    <Property Name="Animal_ID" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "zoomag.dbo.AllDataWithoutIDs" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="AllDataWithoutIDs">
+    <Key>
+      <PropertyRef Name="AnimalName" />
+      <PropertyRef Name="AnimalSpecies" />
+      <PropertyRef Name="AnimalAge" />
+      <PropertyRef Name="AnimalPrice" />
+      <PropertyRef Name="CustomerName" />
+      <PropertyRef Name="CustomerEmail" />
+      <PropertyRef Name="CustomerPhone" />
+      <PropertyRef Name="OrderQuantity" />
+      <PropertyRef Name="OrderDate" />
+    </Key>
+    <Property Name="AnimalName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AnimalSpecies" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AnimalAge" Type="int" Nullable="false" />
+    <Property Name="AnimalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustomerEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustomerPhone" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="OrderQuantity" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Orders__Animal_I__619B8048">
+    <End Role="Animals" Type="Self.Animals" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animals">
+        <PropertyRef Name="ID_Animal" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Customer__60A75C0F">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="ID_Customer" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AddAnimal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="Species" Type="nvarchar" Mode="In" />
+    <Parameter Name="Age" Type="int" Mode="In" />
+    <Parameter Name="Price" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="DeleteAnimal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Animal" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UpdateAnimal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Animal" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="Species" Type="nvarchar" Mode="In" />
+    <Parameter Name="Age" Type="int" Mode="In" />
+    <Parameter Name="Price" Type="decimal" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище zoomagModelContainer">
+    <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AllDataWithoutIDs" EntityType="Self.AllDataWithoutIDs" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AllDataWithoutIDs].[AnimalName] AS [AnimalName], 
+    [AllDataWithoutIDs].[AnimalSpecies] AS [AnimalSpecies], 
+    [AllDataWithoutIDs].[AnimalAge] AS [AnimalAge], 
+    [AllDataWithoutIDs].[AnimalPrice] AS [AnimalPrice], 
+    [AllDataWithoutIDs].[CustomerName] AS [CustomerName], 
+    [AllDataWithoutIDs].[CustomerEmail] AS [CustomerEmail], 
+    [AllDataWithoutIDs].[CustomerPhone] AS [CustomerPhone], 
+    [AllDataWithoutIDs].[OrderQuantity] AS [OrderQuantity], 
+    [AllDataWithoutIDs].[OrderDate] AS [OrderDate]
+    FROM [dbo].[AllDataWithoutIDs] AS [AllDataWithoutIDs]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Orders__Animal_I__619B8048" Association="Self.FK__Orders__Animal_I__619B8048">
+      <End Role="Animals" EntitySet="Animals" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Customer__60A75C0F" Association="Self.FK__Orders__Customer__60A75C0F">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

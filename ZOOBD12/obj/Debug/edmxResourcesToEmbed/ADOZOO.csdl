@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="zoomagModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ALLZOO">
+    <Key>
+      <PropertyRef Name="ID_ALLZOO" />
+    </Key>
+    <Property Name="ID_ALLZOO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AnimalName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AnimalSpecies" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AnimalAge" Type="Int32" Nullable="false" />
+    <Property Name="AnimalPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrderQuantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="Animals">
+    <Key>
+      <PropertyRef Name="ID_Animal" />
+    </Key>
+    <Property Name="ID_Animal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Species" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Animal_I__619B8048" FromRole="Animals" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="ID_Customer" />
+    </Key>
+    <Property Name="ID_Customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__60A75C0F" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID_Order" />
+    </Key>
+    <Property Name="ID_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customer_ID" Type="Int32" Nullable="false" />
+    <Property Name="Animal_ID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Animals" Relationship="Self.FK__Orders__Animal_I__619B8048" FromRole="Orders" ToRole="Animals" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Orders__Customer__60A75C0F" FromRole="Orders" ToRole="Customers" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="AllDataWithoutIDs">
+    <Key>
+      <PropertyRef Name="AnimalName" />
+      <PropertyRef Name="AnimalSpecies" />
+      <PropertyRef Name="AnimalAge" />
+      <PropertyRef Name="AnimalPrice" />
+      <PropertyRef Name="CustomerName" />
+      <PropertyRef Name="CustomerEmail" />
+      <PropertyRef Name="CustomerPhone" />
+      <PropertyRef Name="OrderQuantity" />
+      <PropertyRef Name="OrderDate" />
+    </Key>
+    <Property Name="AnimalName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AnimalSpecies" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AnimalAge" Type="Int32" Nullable="false" />
+    <Property Name="AnimalPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrderQuantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <Association Name="FK__Orders__Animal_I__619B8048">
+    <End Role="Animals" Type="Self.Animals" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animals">
+        <PropertyRef Name="ID_Animal" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Animal_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Customer__60A75C0F">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="ID_Customer" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="zoomagEntities3" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ALLZOO" EntityType="Self.ALLZOO" />
+    <EntitySet Name="Animals" EntityType="Self.Animals" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="AllDataWithoutIDs" EntityType="Self.AllDataWithoutIDs" />
+    <AssociationSet Name="FK__Orders__Animal_I__619B8048" Association="Self.FK__Orders__Animal_I__619B8048">
+      <End Role="Animals" EntitySet="Animals" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Customer__60A75C0F" Association="Self.FK__Orders__Customer__60A75C0F">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <FunctionImport Name="AddAnimal">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Species" Mode="In" Type="String" />
+      <Parameter Name="Age" Mode="In" Type="Int32" />
+      <Parameter Name="Price" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAnimal">
+      <Parameter Name="ID_Animal" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(zoomagModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(zoomagModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="UpdateAnimal">
+      <Parameter Name="ID_Animal" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Species" Mode="In" Type="String" />
+      <Parameter Name="Age" Mode="In" Type="Int32" />
+      <Parameter Name="Price" Mode="In" Type="Decimal" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
